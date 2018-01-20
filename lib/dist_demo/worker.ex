@@ -9,11 +9,11 @@ defmodule DD.Worker do
     GenServer.start_link(__MODULE__, [name])
   end
 
-  def get_state(pid), do: GenServer.call(pid, :get_state)
-
   def init([name]) do
     {:ok, {name, :rand.uniform(5_000)}}
   end
+
+  def handle_call(:get_state, _, state), do: {:reply, state, state}
 
   # called when a handoff has been initiated due to changes
   # in cluster topology, valid response values are:
@@ -57,6 +57,4 @@ defmodule DD.Worker do
   def handle_info({:swarm, :die}, state) do
     {:stop, :shutdown, state}
   end
-
-  def handle_call(:get_state, _, state), do: {:reply, state, state}
 end
