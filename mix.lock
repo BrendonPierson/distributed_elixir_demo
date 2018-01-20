@@ -1,3 +1,7 @@
-%{"gen_state_machine": {:hex, :gen_state_machine, "2.0.1", "85efd5a0376929c3a4246dd943e17564a2908c7ddd7acd242d84594e785d83f8", [:mix], [], "hexpm"},
+%{
+  "ex_aws": {:hex, :ex_aws, "1.1.2", "b78416d0a84efe92c22e5df8ba7ca028d63b2b4228f95871a1ecf10324b6493b", [:mix], [{:configparser_ex, "~> 0.2.1", [hex: :configparser_ex, repo: "hexpm", optional: true]}, {:hackney, "1.6.3 or 1.6.5 or 1.7.1", [hex: :hackney, repo: "hexpm", optional: true]}, {:jsx, "~> 2.8", [hex: :jsx, repo: "hexpm", optional: true]}, {:poison, ">= 1.2.0", [hex: :poison, repo: "hexpm", optional: true]}, {:sweet_xml, "~> 0.6", [hex: :sweet_xml, repo: "hexpm", optional: true]}, {:xml_builder, "~> 0.0.6", [hex: :xml_builder, repo: "hexpm", optional: true]}], "hexpm"},
+  "gen_state_machine": {:hex, :gen_state_machine, "2.0.1", "85efd5a0376929c3a4246dd943e17564a2908c7ddd7acd242d84594e785d83f8", [:mix], [], "hexpm"},
   "libring": {:hex, :libring, "1.3.0", "2379c64d0fb4077fc9750fa9b6ee2a08880064e9be3c9514d7ea72c67f843a05", [:mix], [], "hexpm"},
-  "swarm": {:hex, :swarm, "3.1.0", "e13b22627cbe3c32c45f91d11206b7834c0b942073c553ad76b65801e7638b78", [:mix], [{:gen_state_machine, "~> 2.0", [hex: :gen_state_machine, repo: "hexpm", optional: false]}, {:libring, "~> 1.0", [hex: :libring, repo: "hexpm", optional: false]}], "hexpm"}}
+  "swarm": {:hex, :swarm, "3.1.0", "e13b22627cbe3c32c45f91d11206b7834c0b942073c553ad76b65801e7638b78", [:mix], [{:gen_state_machine, "~> 2.0", [hex: :gen_state_machine, repo: "hexpm", optional: false]}, {:libring, "~> 1.0", [hex: :libring, repo: "hexpm", optional: false]}], "hexpm"},
+  "sweet_xml": {:hex, :sweet_xml, "0.6.5", "dd9cde443212b505d1b5f9758feb2000e66a14d3c449f04c572f3048c66e6697", [:mix], [], "hexpm"},
+}

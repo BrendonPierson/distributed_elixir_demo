@@ -77,7 +77,7 @@ defmodule DD do
   def call_group(group, msg), do: Swarm.multi_call(group, msg)
 
   # callbacks
-  def init, do: {:ok, []}
+  def init(_), do: {:ok, []}
 
   def handle_cast({:start_child, %Child{} = child}, _) do
     start_child(child)

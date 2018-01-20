@@ -20,7 +20,9 @@ defmodule DD.Mixfile do
 
   defp deps do
     [
-      {:swarm, "~> 3.0"}
+      {:swarm, "~> 3.0"},
+      {:sweet_xml, "~> 0.3"},
+      {:ex_aws, "1.1.2"},
     ]
   end
 end
