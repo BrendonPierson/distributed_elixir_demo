@@ -4,13 +4,12 @@ defmodule DD.Worker do
   random recurring interval to stdout.
   """
   use GenServer
-
   def start_link(name) do
     GenServer.start_link(__MODULE__, [name])
   end
 
   def init([name]) do
-    {:ok, {name, :rand.uniform(5_000)}}
+    {:ok, {name, :rand.uniform(5_000)}, 0}
   end
 
   def handle_call(:get_state, _, state), do: {:reply, state, state}
@@ -25,7 +24,6 @@ defmodule DD.Worker do
   def handle_call({:swarm, :begin_handoff}, _from, {name, delay}) do
     {:reply, {:resume, delay}, {name, delay}}
   end
-
   # called after the process has been restarted on its new node,
   # and the old process' state is being handed off. This is only
   # sent if the return to `begin_handoff` was `{:resume, state}`.
@@ -35,7 +33,6 @@ defmodule DD.Worker do
   def handle_cast({:swarm, :end_handoff, delay}, {name, _}) do
     {:noreply, {name, delay}}
   end
-
   # called when a network split is healed and the local process
   # should continue running, but a duplicate process on the other
   # side of the split is handing off its state to us. You can choose
@@ -46,11 +43,10 @@ defmodule DD.Worker do
   end
 
   def handle_info(:timeout, {name, delay}) do
-    IO.puts("#{inspect(name)} says hi!")
+    IO.puts "#{inspect name} says hi!"
     Process.send_after(self(), :timeout, delay)
     {:noreply, {name, delay}}
   end
-
   # this message is sent when this process should die
   # because it is being moved, use this as an opportunity
   # to clean up
@@ -58,3 +54,5 @@ defmodule DD.Worker do
     {:stop, :shutdown, state}
   end
 end
+
+
