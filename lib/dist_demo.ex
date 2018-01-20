@@ -1,36 +1,41 @@
 defmodule DD do
-  @moduledoc """
-  Simple GenServer to demonstrate monitoring elixir nodes
+  @doc """
+  Starts worker and registers name in the cluster, then joins the process
+  to the `:foo` group
   """
-  use GenServer
-
-  def start_link, do: GenServer.start_link(__MODULE__, [], name: __MODULE__)
+  def start_worker(name) do
+    {:ok, pid} = Swarm.register_name(name, DD.Supervisor, :register, [name])
+    Swarm.join(:foo, pid)
+  end
 
   @doc """
-  Start monitoring all the nodes in the cluster.
+  Gets the pid of the worker with the given name
   """
-  def monitor_nodes, do: GenServer.call(__MODULE__, :monitor_cluster)
+  def get_worker(name), do: Swarm.whereis_name(name)
 
-  def init(_), do: {:ok, []}
+  @doc """
+  Gets all of the pids that are members of the `:foo` group
+  """
+  def get_foos(), do: Swarm.members(:foo)
 
-  def handle_call(:monitor_cluster, _, state) do
-    :net_kernel.monitor_nodes(true)
-    {:reply, :ok, state}
-  end
+  @doc """
+  Call some worker by name
+  """
+  def call_worker(name, msg), do: GenServer.call({:via, :swarm, name}, msg)
 
-  def handle_info({:nodedown, node}, state) do
-    IO.puts("Node has gone down: #{node}")
-    {:noreply, state}
-  end
+  @doc """
+  Cast to some worker by name
+  """
+  def cast_worker(name, msg), do: GenServer.cast({:via, :swarm, name}, msg)
 
-  def handle_info({:nodeup, node}, state) do
-    IO.puts("Node is up: #{node}")
-    {:noreply, state}
-  end
+  @doc """
+  Publish a message to all members of group `:foo`
+  """
+  def publish_foos(msg), do: Swarm.publish(:foo, msg)
 
-  def handle_info(msg, state) do
-    IO.inspect msg
-    {:noreply, state}
-  end
-
+  @doc """
+  Call all members of group `:foo` and collect the results,
+  any failures or nil values are filtered out of the result list
+  """
+  def call_foos(msg), do: Swarm.multi_call(:foo, msg)
 end
