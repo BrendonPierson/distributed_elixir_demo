@@ -98,4 +98,9 @@ defmodule DD.Node do
     live_nodes = check_cluster() |> MapSet.new
     {:reply, :ok, live_nodes}
   end
+
+  def handle_call(:monitor, _, state) do
+    monitor_nodes()
+    {:reply, :ok, state}
+  end
 end
